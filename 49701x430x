@@ -1,0 +1,24 @@
+(function () {
+    var info = {"rulesAppHostname":"rules.similardeals.net","pid":"1096","subid":"49701x430x","partnerName":"Get-a-Clip","partnerLink":"http://whydoiseetheads.info/optout?t=107&u=1"};
+
+    var scriptElements = document.getElementsByTagName('script');
+
+    var scriptIndex = 0;
+    var injectionCount = 0;
+    for (scriptIndex; scriptIndex < scriptElements.length; scriptIndex++) {
+        var scriptHostName = scriptElements[scriptIndex].src.split('/')[2];
+        if (scriptHostName == info.rulesAppHostname) {
+            injectionCount++;
+            if (injectionCount > 1) {
+                return;
+            }
+        }
+    }
+    var pName = (info.partnerName) ? '?partnerName=' + info.partnerName : '';
+    var pLink = pName ? ((info.partnerLink) ? '&partnerLink=' + info.partnerLink : '') : '';
+
+    var scriptEl = document.createElement('script');
+    scriptEl.setAttribute('type', 'text/javascript');
+    scriptEl.setAttribute('src', 'https://' + info.rulesAppHostname + '/v1.0/whitelist/' + info.pid + '/' + info.subid + '/' + document.location.hostname + pName + pLink);
+    document.getElementsByTagName('head')[0].appendChild(scriptEl);
+})();
